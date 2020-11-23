@@ -19,7 +19,7 @@ import qualified GitHub as GH
 import qualified Servant.Client               as SC
 import           Network.HTTP.Client          (newManager)
 import           Network.HTTP.Client.TLS      (tlsManagerSettings)
-
+import           System.Environment           (getArgs)
 import Data.Text hiding (map,intercalate, groupBy, concat)
 import Data.List (intercalate, groupBy, sortBy)
 import Data.Either
@@ -27,7 +27,10 @@ import Data.Either
 someFunc :: IO ()
 someFunc = do
   putStrLn "Let's try a GitHubCall"
-  testGitHubCall "esjmb"
+  (rName:_) <- getArgs
+  putStrLn $ "name is " ++ rName
+  
+  testGitHubCall $ pack rName
   putStrLn "end."
 
 
