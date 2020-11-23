@@ -20,6 +20,8 @@ type UserAgent = Text
 
 data GitHubUser =
   GitHubUser { login :: Text
+             , name  :: Text
+             , email :: Text
              } deriving (Generic, FromJSON, Show)
 
 type GitHubAPI = "users" :> Header "user-agent" UserAgent 
