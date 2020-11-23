@@ -26,6 +26,7 @@ dependencies:
   - servant
   - servant-client
   - http-client
+  - http-client-tls
 
 library:
   source-dirs: src

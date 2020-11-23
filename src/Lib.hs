@@ -16,9 +16,9 @@ module Lib
 
 import qualified GitHub as GH
 import qualified Servant.Client               as SC
-import           Network.HTTP.Client          (defaultManagerSettings,
-                                               newManager)
-                 
+import           Network.HTTP.Client          (newManager)
+import           Network.HTTP.Client.TLS      (tlsManagerSettings)
+
 someFunc :: IO ()
 someFunc = do
   putStrLn "Let's try a GitHubCall"
@@ -28,7 +28,7 @@ someFunc = do
 
 testGitHubCall :: IO ()
 testGitHubCall = 
-  (SC.runClientM GH.test =<< env) >>= \case
+  (SC.runClientM (GH.test "esjmb") =<< env) >>= \case
 
     Left err -> do
       putStrLn $ "heuston, we have a problem: " ++ show err
@@ -38,5 +38,5 @@ testGitHubCall =
 
   where env :: IO SC.ClientEnv
         env = do
-          manager <- newManager defaultManagerSettings
+          manager <- newManager tlsManagerSettings
           return $ SC.mkClientEnv manager (SC.BaseUrl SC.Http "api.github.com" 80 "")

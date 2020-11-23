@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: a1d3141659180650deb7700dd84eeea54f1ed3c7a4ff757ba20e9a3b08aa1a17
+-- hash: 798c186e40c2fb433589651b5cc9e72ce844bbe7f8b1734360c3eac5bdd404d9
 
 name:           github-get
 version:        0.1.0.0
@@ -37,6 +37,7 @@ library
       aeson
     , base >=4.7 && <5
     , http-client
+    , http-client-tls
     , servant
     , servant-client
     , text
@@ -54,6 +55,7 @@ executable github-get-exe
     , base >=4.7 && <5
     , github-get
     , http-client
+    , http-client-tls
     , servant
     , servant-client
     , text
@@ -72,6 +74,7 @@ test-suite github-get-test
     , base >=4.7 && <5
     , github-get
     , http-client
+    , http-client-tls
     , servant
     , servant-client
     , text
