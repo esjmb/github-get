@@ -16,14 +16,16 @@ import           Servant.API
 import           Servant.Client
 
 type Username = Text
+type UserAgent = Text
 
-type GitHubAPI = "users" :> Capture "username" Username  :> Get '[JSON] Text
+type GitHubAPI = "users" :> Header "user-agent" UserAgent 
+                         :> Capture "username" Username  :> Get '[JSON] Text
             :<|> "test2" :> Get '[JSON] Text
 
 gitHubAPI :: Proxy GitHubAPI
 gitHubAPI = Proxy
 
-test :: Username -> ClientM Text
+test :: Maybe UserAgent -> Username -> ClientM Text
 test2 :: ClientM Text
 
 test :<|> test2 = client gitHubAPI
