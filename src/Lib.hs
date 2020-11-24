@@ -77,15 +77,16 @@ testGitHubCall auth name =
           return $ SC.mkClientEnv manager (SC.BaseUrl SC.Http "api.github.com" 80 "")
 
         getContribs :: BasicAuthData -> GH.Username -> GH.GitHubRepo -> IO (Either SC.ClientError [GH.RepoContributor])
-        getContribs auth name (GH.GitHubRepo repo _ _) =
+        getContribs auth name (GH.GitHubRepo repo _ _) = do
+          putStrLn $ "Getting contributors for " ++ show repo
           SC.runClientM (GH.getRepoContribs (Just "haskell-app") auth name repo) =<< env
 
         groupContributors :: [GH.RepoContributor] -> [GH.RepoContributor]
-        groupContributors  = sortBy (\(GH.RepoContributor _ c1) (GH.RepoContributor _ c2) ->  compare c1 c2) .
+        groupContributors  = sortBy (\(GH.RepoContributor _ c1) (GH.RepoContributor _ c2) -> compare c1 c2) .
                              map mapfn .
-                             groupBy (\(GH.RepoContributor l1 _) (GH.RepoContributor l2 _) ->  l1 == l2)
+                             groupBy (\(GH.RepoContributor l1 _) (GH.RepoContributor l2 _) -> l1 == l2)
          where mapfn :: [GH.RepoContributor] -> GH.RepoContributor
-               mapfn xs@((GH.RepoContributor l _):_) = GH.RepoContributor l . sum $ 
+               mapfn xs@((GH.RepoContributor l _):_) = GH.RepoContributor l .sum $ 
                                                        map (\(GH.RepoContributor _ c) -> c)  xs
                
               
